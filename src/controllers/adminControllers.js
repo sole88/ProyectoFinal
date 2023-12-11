@@ -36,8 +36,8 @@ const adminControllers = {
         discount: item.discount,
         sku: item.sku,
         dues: item.dues,
-        image_front: '/'+ req.files[0].filename,
-        image_back: '/'+ req.files[1].filename,
+        image_front: /*'/'+ req.files[0].filename*/ '/proximamente1.jpg',
+        image_back: /*'/'+ req.files[1].filename,*/ '/proximamente.jpg',
         licence_id: item.collection,
         category_id: item.category,
       }

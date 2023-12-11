@@ -16,7 +16,7 @@ const uploadFile = multer({storage})
 
 router.get('/', adminControllers.adminView);
 router.get('/create', adminControllers.createView);
-router.post('/create',uploadFile.array('images', 2) ,adminControllers.createItem);
+router.post('/create',/*uploadFile.array('images', 2),*/adminControllers.createItem);
 router.get('/edit/:id', adminControllers.editView);
 router.put('/edit/:id',adminControllers.editItem);
 router.delete('/delete/:id', adminControllers.deleteItem);
