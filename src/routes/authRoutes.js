@@ -9,7 +9,7 @@ const loginValidation = [
     body('email')
     .isEmail()
     .withMessage('Debe ingresar un correo válido'),
-    body('password')
+    body('pass')
      .isLength({ min: 6})
      .isAlphanumeric()
      .withMessage('La contraseña debe tener al menos 6 caracteres y contener letras y números.')

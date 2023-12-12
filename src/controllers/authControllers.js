@@ -1,23 +1,30 @@
 const modelsUser = require('../models/user')
 
 
+
 const authControllers ={
     loginView:  (req, res) => res.render('./auth/login', {view : {title: 'Login | Funkoshop',  error: req.query.error}}),
    
     loginUser:  async(req, res) => {  
-        const { email, password } = req.body;
-        const [valido] = await modelsUser.verificarUser(email, password);
+        const { email, pass } = req.body;
+        const [valido] = await modelsUser.verificarUser(email, pass);
         // console.log(valido) --> de aca llega una matriz dificil de recorrer por eso debo deconstruyo con [valido] 
         if (valido == undefined){ 
-            res.redirect('/login/?error=1')
-        }else{
-            req.session.userid = valido.user_id //guardo id como sesion, el session no es parte de request debo crear la session 
-            res.redirect(`/admin?user=${valido.user_id}`)}},
+            res.redirect('/login/?error=1');
+        } else{
+            req.session.userid = valido.user_id; //guardo id como sesion, el session no es parte de request debo crear la session
+            console.log(req.session.userid);
+            if(req.session.userid) {res.locals.logeado = true }
+            res.redirect(`/admin?user=${valido.user_id}`,);
+          
+    }
+        
+    },
 
            
     registerView:  (req, res) =>{
-        //if (req.session.userid) {logeado = true}{ res.reder('/auth/register',{view :{ title: 'Register', logeado}})}
-        res.render('./auth/register', {view : {title: 'Register'}})
+        //if(req.session.userid) {logeado = true }{ res.reder('/auth/register',{view :{ title: 'Register', logeado}})}
+       res.render('./auth/register', {view : {title: 'Register'}})
     },
   
      registerUser: async(req, res) => {
@@ -28,12 +35,12 @@ const authControllers ={
           password: req.body.pass};
 
           const creado = await modelsUser.crearUser(userSchema)
-          res.redirect('./auth/login')
+          res.render('./auth/login',  {view: {title : "Login"}})
      },
 
     logoutView: (req,res) =>{ 
         req.session = null;
-        res.redirect('/home', {view: {title : "Logout"}})}
+        res.redirect('/', {view: {title : "Logout"}})}
 }
 
 module.exports = authControllers;
